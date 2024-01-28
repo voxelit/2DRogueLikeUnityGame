@@ -61,6 +61,7 @@ def countfiles(dictfiles, lsttokens, repo):
                     days = newDate - initialCommit
                     weeks = days.days / 7
                     dates.append(weeks)
+                    dictfiles[filename] = 0
         ipage += 1
     # except:
     #     print("Error receiving data")
@@ -76,11 +77,12 @@ repo = 'scottyab/rootbeer'
 # Remember to empty the list when going to commit to GitHub.
 # Otherwise they will all be reverted and you will have to re-create them
 # I would advise to create more than one token for repos with heavy commits
-lstTokens = ["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"]
+lstTokens = ["gvjgvjj"]
 
 dictfiles = dict()
 authors = []
 files = []
+newFiles = []
 dates = []
 colors = []
 initialCommit = datetime(2015, 6, 17)
@@ -142,5 +144,14 @@ for author in authors:
     elif "leocad" in author:
         colors.append(leocad)
 
-plt.scatter(files, dates, c=colors, marker='s')
+count = 1
+for file in files:
+    if dictfiles[file] == 0:
+        dictfiles[file] = count
+        count += 1
+
+for file in files:
+    newFiles.append(dictfiles[file])
+
+plt.scatter(newFiles, dates, c=colors, marker='s')
 plt.show()
